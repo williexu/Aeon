@@ -32,45 +32,47 @@ def correct(word):
 def words(text):
     return re.findall('[a-z]+', text.lower())
 
-with open('../data/individual_words_lemmatized.txt', 'rb') as word_file:
-	my_words = pickle.load(word_file) # use own word file
-	NWORDS = Counter(words(file('big.txt').read())) # use big.txt for spell checker
-	lemmatizer = WordNetLemmatizer()
-	def check_reduce(word):
-		# stemmed = stemmer.stem(word)
-		# return lemmatizer.lemmatize(stemmed)
-		return lemmatizer.lemmatize(correct(word))
-		# return stemmer.stem(word)
+NWORDS = Counter(words(file('big.txt').read())) # use big.txt for spell checker
+
+# with open('../data/individual_words_lemmatized.txt', 'rb') as word_file:
+# 	my_words = pickle.load(word_file) # use own word file
+# 	NWORDS = Counter(words(file('big.txt').read())) # use big.txt for spell checker
+# 	lemmatizer = WordNetLemmatizer()
+# 	def check_reduce(word):
+# 		# stemmed = stemmer.stem(word)
+# 		# return lemmatizer.lemmatize(stemmed)
+# 		return lemmatizer.lemmatize(correct(word))
+# 		# return stemmer.stem(word)
 
 
-	# print type(NWORDS)
-	# print correct("jsdhfjhd")
-	# print correct("hattt")
-	# print correct("haters")
-	# print correct("spell")
-	# print correct("spelling")
-	# print correct("speling")
-	# print NWORDS["g"]
-	# print NWORDS.most_common(100)
-	# word_counter = Counter([correct(word) for word in NWORDS])
-	word_counter = Counter()
-	counter = 0
-	for word in my_words:
-		corrected = check_reduce(word)
-		if corrected in word_counter:
-			word_counter[corrected] += my_words[word]
-		else:
-			word_counter[corrected] = my_words[word]
-		counter += 1
-		# if counter % 100 == 0:
-		print counter
+# 	# print type(NWORDS)
+# 	# print correct("jsdhfjhd")
+# 	# print correct("hattt")
+# 	# print correct("haters")
+# 	# print correct("spell")
+# 	# print correct("spelling")
+# 	# print correct("speling")
+# 	# print NWORDS["g"]
+# 	# print NWORDS.most_common(100)
+# 	# word_counter = Counter([correct(word) for word in NWORDS])
+# 	word_counter = Counter()
+# 	counter = 0
+# 	for word in my_words:
+# 		corrected = check_reduce(word)
+# 		if corrected in word_counter:
+# 			word_counter[corrected] += my_words[word]
+# 		else:
+# 			word_counter[corrected] = my_words[word]
+# 		counter += 1
+# 		# if counter % 100 == 0:
+# 		print counter
 
-	print len(NWORDS)
-	print len(word_counter)
+# 	print len(NWORDS)
+# 	print len(word_counter)
 
 
-with open('../data/words_spell_checked.txt', 'wb') as word_file:
-	pickle.dump(word_counter, word_file)
+# with open('../data/words_spell_checked.txt', 'wb') as word_file:
+# 	pickle.dump(word_counter, word_file)
 
 	# print len(word_counter)
 	# print word_counter 
