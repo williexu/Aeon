@@ -8,7 +8,6 @@ from nltk.stem.porter import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from collections import Counter
 import pickle
-from ai_spell_checker import *
 
 with open('../data/reviews.txt', 'rb') as word_file:
 	data_list = pickle.load(word_file)

@@ -57,7 +57,7 @@ for l in parse("../data/reviews_Sports_and_Outdoors_5.json.gz"):
 # 	pickle.dump(ratings, word_file)
 
 with open('../data/helpfuls.txt', 'wb') as word_file:
-	pickle.dump(ratings, word_file)
+	pickle.dump(helpfuls, word_file)
 
 
 
