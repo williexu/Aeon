@@ -3,15 +3,15 @@ import numpy as np
 import csv
 from sklearn import neighbors, tree,decomposition
 from sklearn import svm
-from statsmodels.tsa.arima_model import ARIMA
-import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
+#from statsmodels.tsa.arima_model import ARIMA
+#import matplotlib
+#matplotlib.use('TkAgg')
+#import matplotlib.pyplot as plt
 from sklearn import ensemble
-import statsmodels.api as sm
-from statsmodels.graphics.api import qqplot
-import matplotlib.patches as mpatches
-import pylab
+#import statsmodels.api as sm
+#from statsmodels.graphics.api import qqplot
+#import matplotlib.patches as mpatches
+#import pylab
 from keras.models import Sequential
 from keras.layers import Dense,Activation,Conv2D,MaxPooling2D,Flatten,Dropout,Embedding,LSTM
 #from theano import ifelse
