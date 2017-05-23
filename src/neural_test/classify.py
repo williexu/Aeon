@@ -4,6 +4,7 @@ import csv
 from keras.models import Sequential
 from keras.layers import Dense,Activation,Conv2D,MaxPooling2D,Flatten,Dropout
 from theano import ifelse
+from keras.layers import Embedding,LSTM
 
 def one_hot(line):
 	for i,x in enumerate(line):
@@ -40,8 +41,13 @@ x=np.asarray(x)
 y=np.array(y)
 
 #xTr=xTr.reshape(4000,28,28,1)
-x#=x.reshape(4000,28,28,1)
+#x=x.reshape(4000,28,28,1)
 #xTe=xTe.reshape(800,28,28,1)
+
+#xTr=xTr.reshape(4000,784,1)
+#x=x.reshape(4000,784,1)
+#xTe=xTe.reshape(800,784,1)
+
 sep=np.arange(len(yTr))
 np.random.shuffle(sep)
 xValid=xTr[sep[:500]]
@@ -56,14 +62,25 @@ print(xTe.shape)
 model=Sequential()
 
 #Multi Layer Perceptron
-model.add(Dense(units=5000,input_dim=784)) #614656 for fully interconnected
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
-model.add(Dense(units=784))
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
-model.add(Dense(units=10))
-model.add(Activation('softmax'))
+# model.add(Dense(units=784,input_dim=784)) #614656 for fully interconnected
+# model.add(Activation('relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(units=784))
+# model.add(Activation('relu'))
+# model.add(Dense(units=300))
+# model.add(Dropout(0.2))
+# model.add(Activation('relu'))
+# model.add(Dense(units=150))
+# model.add(Dropout(0.2))
+# model.add(Activation('relu'))
+# model.add(Dense(units=75))
+# model.add(Activation('relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(units=35))
+# model.add(Activation('relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(units=10))
+# model.add(Activation('softmax'))
 
 # model.add(Conv2D(32,(3,3),padding="same",input_shape=xTr.shape[1:]))
 # model.add(Activation('relu'))
@@ -87,23 +104,29 @@ model.add(Activation('softmax'))
 # model.add(Activation('softmax'))
 
 #sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+
+model.add(Embedding(2000,784))
+#model.add(LSTM(10,dropout=0.2,recurrent_dropout=0.2))
+#model.add(Dense(10,activation='sigmoid'))
+
+
 model.compile(loss='categorical_crossentropy',
               optimizer='adagrad',
               metrics=['accuracy'])
 
-num_epochs=30
+num_epochs=50
 model.fit(xTr, yTr,epochs=num_epochs)
-loss_and_metrics = model.evaluate(xTr, yTr, batch_size=128)
+loss_and_metrics = model.evaluate(xTr, yTr, batch_size=64)
 print(loss_and_metrics)
-classes = model.predict(xValid, batch_size=128)
+classes = model.predict(xValid, batch_size=64)
 ans=[]
 res=[]
 for i in range(len(xValid)):
 	ans.append(np.argmax(classes[i])==one_hot(yValid[i]))
-print(sum(ans)*1.0/500)
+print("error: ", sum(ans)*1.0/500)
 if sum(ans)*1.0/500 > .98:	
 	model.fit(x,y,epochs=num_epochs)
-	classes = model.predict(xTe, batch_size=128)
+	classes = model.predict(xTe, batch_size=64)
 	for i in range(len(xTe)):
 		res.append((i,np.argmax(classes[i])))
 
