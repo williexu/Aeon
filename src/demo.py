@@ -49,7 +49,7 @@ review = raw_input("Enter a review: \n")
 while len(review) <= 10:
 	review = raw_input("Please enter a longer review: \n")
 
-print type(model)
+# print type(model)
 
 #average length of a review is ~600 so we scale
 scale = 600.0 / len(review)
@@ -71,10 +71,10 @@ word_list = [reduce(word) for word in word_list]
 for x in word_list:
 	if x in vocab:
 		vector[vocab.index(x)] += 1 * scale
-		print 'match', x
+		# print 'match', x
 
 vector = numpy.array([numpy.concatenate((vector,[1]))])
-print vector.shape
+# print vector.shape
 
 print bound(model.predict(vector))
 
